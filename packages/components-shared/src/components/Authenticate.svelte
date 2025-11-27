@@ -106,7 +106,7 @@
 		}
 	};
 
-	const replay = async () => {
+	const handleReplay = async () => {
 		stateBet.betAmount = (stateUrlDerived.amount() / API_AMOUNT_MULTIPLIER) || 0;
 		stateBet.wageredBetAmount = (stateUrlDerived.amount() / API_AMOUNT_MULTIPLIER) || 0;
 		stateBet.activeBetModeKey = stateUrlDerived.mode();
@@ -133,7 +133,7 @@
 	onMount(async () => {
 		if(stateUrlDerived.replay()) {
 			stateUi.config.mode = 'replay';
-			await replay();
+			await handleReplay();
 		} else {
 			stateUi.config.mode = 'default';
 			await authenticate();
