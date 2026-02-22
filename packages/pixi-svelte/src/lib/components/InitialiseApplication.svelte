@@ -26,7 +26,8 @@
 			multiView: false,
 			antialias: true,
 			clearBeforeRender: true,
-			preference: 'webgpu',
+			// WebGL first: plus rapide sur Windows (WebGPU peut prendre 15+ min en Storybook)
+			preference: 'webgl',
 			powerPreference: 'high-performance',
 			resolution: devicePixelRatio.current,
 			resizeTo: window,

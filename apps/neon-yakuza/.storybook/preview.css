@@ -1,0 +1,6 @@
+/* Éviter écran blanc : zone de rendu avec taille minimale pour le canvas Pixi */
+#storybook-root,
+#storybook-docs {
+	min-height: 100vh;
+	background: #0a0a0f;
+}

@@ -12,6 +12,7 @@
 	const context = getContextApp();
 
 	let preLoaded = $state(false);
+	let postLoadStarted = $state(false);
 
 	const assetNameList = $derived(
 		context.stateApp.assets
@@ -50,18 +51,21 @@
 					const processed = getProcessed({ key, rawAsset, type, src });
 					return processed;
 				} catch (error) {
-					console.error(error);
+					console.error(`[AssetsLoader] Failed to load asset "${key}":`, error);
+					return undefined;
 				}
 			}),
 		);
 
-		return loadedAssetsArray.reduce(
-			(acc, cur) => ({
-				...acc,
-				...cur,
-			}),
-			{} as LoadedAssets,
-		);
+		return loadedAssetsArray
+			.filter((cur): cur is LoadedAssets => cur != null && typeof cur === 'object')
+			.reduce(
+				(acc, cur) => ({
+					...acc,
+					...cur,
+				}),
+				{} as LoadedAssets,
+			);
 	};
 
 	$effect(() => {
@@ -77,17 +81,21 @@
 	});
 
 	$effect(() => {
-		if (!context.stateApp.loaded && preLoaded) {
+		if (!context.stateApp.loaded && preLoaded && !postLoadStarted) {
+			postLoadStarted = true;
 			(async () => {
-				if (assetNameList.length > 0) {
-					const postLoadedAssets = await loadAssets(assetNameList);
-					if (postLoadedAssets)
-						context.stateApp.loadedAssets = {
-							...context.stateApp.loadedAssets,
-							...postLoadedAssets,
-						};
+				try {
+					if (assetNameList.length > 0) {
+						const postLoadedAssets = await loadAssets(assetNameList);
+						if (postLoadedAssets)
+							context.stateApp.loadedAssets = {
+								...context.stateApp.loadedAssets,
+								...postLoadedAssets,
+							};
+					}
+				} finally {
+					context.stateApp.loaded = true;
 				}
-				context.stateApp.loaded = true;
 			})();
 		}
 	});

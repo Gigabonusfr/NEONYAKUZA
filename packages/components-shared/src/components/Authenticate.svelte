@@ -5,7 +5,11 @@
 	import { stateUrlDerived, stateBet, stateConfig, stateModal, stateUi } from 'state-shared';
 	import { API_AMOUNT_MULTIPLIER, MOST_USED_BET_INDEXES } from 'constants-shared/bet';
 
-	type Props = { children: Snippet };
+	type Props = {
+		children: Snippet;
+		/** Mode démo : pas d'appel API, état par défaut jouable (évite Failed to fetch) */
+		skipAuth?: boolean;
+	};
 
 	const props: Props = $props();
 
@@ -130,15 +134,30 @@
 		}
 	};
 
+	/** Valeurs par défaut pour le mode démo (sans backend) */
+	const setDemoState = () => {
+		stateBet.balanceAmount = 10000;
+		stateBet.betAmount = 1;
+		stateBet.wageredBetAmount = 1;
+		stateBet.currency = 'USD';
+		stateConfig.betAmountOptions = [1, 2, 5, 10, 20, 50, 100, 200, 500, 1000];
+		stateConfig.betMenuOptions = stateConfig.betAmountOptions;
+	};
+
 	onMount(async () => {
-		if(stateUrlDerived.replay()) {
+		if (props.skipAuth) {
+			stateUi.config.mode = 'default';
+			setDemoState();
+			authenticated = true;
+			return;
+		}
+		if (stateUrlDerived.replay()) {
 			stateUi.config.mode = 'replay';
 			await handleReplay();
 		} else {
 			stateUi.config.mode = 'default';
 			await authenticate();
-		};
-
+		}
 		authenticated = true;
 	});
 </script>
