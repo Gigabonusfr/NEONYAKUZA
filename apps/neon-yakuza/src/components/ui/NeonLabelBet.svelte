@@ -58,7 +58,7 @@
 		draw={(g) => {
 			g.clear();
 			g.roundRect(0, 0, w, h, 10);
-			g.fill({ fill: NEON_BG, alpha: 0.95 });
+			g.fill({ color: NEON_BG, alpha: 0.95 });
 			g.roundRect(0, 0, w, h, 10);
 			g.stroke({ width: 2, color: NEON_ROSE, alpha: disabled ? 0.4 : 0.9 });
 		}}

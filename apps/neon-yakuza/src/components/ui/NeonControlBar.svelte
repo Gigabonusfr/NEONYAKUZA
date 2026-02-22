@@ -60,7 +60,7 @@
 			draw={(g) => {
 				g.clear();
 				g.roundRect(0, 0, barWidth, barHeight, 14);
-				g.fill({ fill: NEON_BG, alpha: 0.98 });
+				g.fill({ color: NEON_BG, alpha: 0.98 });
 				g.roundRect(0, 0, barWidth, barHeight, 14);
 				g.stroke({ width: 3, color: NEON_CYAN });
 				g.roundRect(3, 3, barWidth - 6, barHeight - 6, 12);
@@ -77,7 +77,7 @@
 				draw={(g) => {
 					g.clear();
 					g.roundRect(0, 0, btnSize + 4, btnSize + 4, 8);
-					g.fill({ fill: 0x0d0a12, alpha: 0.95 });
+					g.fill({ color: 0x0d0a12, alpha: 0.95 });
 					g.roundRect(0, 0, btnSize + 4, btnSize + 4, 8);
 					g.stroke({ width: 2, color: NEON_VIOLET });
 				}}
@@ -96,7 +96,7 @@
 				draw={(g) => {
 					g.clear();
 					g.roundRect(0, 0, btnSize + 4, btnSize + 4, 8);
-					g.fill({ fill: 0x120a0d, alpha: 0.95 });
+					g.fill({ color: 0x120a0d, alpha: 0.95 });
 					g.roundRect(0, 0, btnSize + 4, btnSize + 4, 8);
 					g.stroke({ width: 2, color: NEON_ROSE });
 				}}
@@ -115,7 +115,7 @@
 				draw={(g) => {
 					g.clear();
 					g.roundRect(0, 0, btnSize + 4, btnSize + 4, 8);
-					g.fill({ fill: 0x0a1212, alpha: 0.95 });
+					g.fill({ color: 0x0a1212, alpha: 0.95 });
 					g.roundRect(0, 0, btnSize + 4, btnSize + 4, 8);
 					g.stroke({ width: 2, color: NEON_CYAN });
 				}}
@@ -134,7 +134,7 @@
 				draw={(g) => {
 					g.clear();
 					g.roundRect(0, 0, btnSize + 4, btnSize + 4, 8);
-					g.fill({ fill: 0x0d0a12, alpha: 0.95 });
+					g.fill({ color: 0x0d0a12, alpha: 0.95 });
 					g.roundRect(0, 0, btnSize + 4, btnSize + 4, 8);
 					g.stroke({ width: 2, color: NEON_VIOLET });
 				}}

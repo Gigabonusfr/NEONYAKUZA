@@ -5,6 +5,27 @@
 	import { stateUrlDerived, stateBet, stateConfig, stateModal, stateUi } from 'state-shared';
 	import { API_AMOUNT_MULTIPLIER, MOST_USED_BET_INDEXES } from 'constants-shared/bet';
 
+	function buildBetLevelsFromMinMaxStep(
+		minBet: number | undefined,
+		maxBet: number | undefined,
+		stepBet: number | undefined,
+	): number[] {
+		if (
+			minBet == null ||
+			maxBet == null ||
+			stepBet == null ||
+			stepBet <= 0 ||
+			minBet > maxBet
+		) {
+			return [];
+		}
+		const levels: number[] = [];
+		for (let v = minBet; v <= maxBet; v += stepBet) {
+			levels.push(v);
+		}
+		return levels.length > 0 ? levels : [minBet];
+	}
+
 	type Props = {
 		children: Snippet;
 		/** Mode démo : pas d'appel API, état par défaut jouable (évite Failed to fetch) */
@@ -48,28 +69,27 @@
 				// 	"defaultBetLevel": 1000000,
 				// 	"betLevels": [100000, 200000, ..., 1000000000],
 				// 	"betModes": {},
-				// 	"jurisdiction": {
-				// 			"socialCasino": false,
-				// 			"disabledFullscreen": false,
-				// 			"disabledTurbo": false,
-				// 			"disabledSuperTurbo": false,
-				// 			"disabledAutoplay": false,
-				// 			"disabledSlamstop": false,
-				// 			"disabledSpacebar": false,
-				// 			"disabledBuyFeature": false,
-				// 			"displayNetPosition": false,
-				// 			"displayRTP": false,
-				// 			"displaySessionTimer": false,
-				// 			"minimumRoundDuration": 0
-				// 	}
+				// 	"jurisdiction": { ... }
 				// }
-				stateConfig.jurisdiction = authenticateData?.config?.jurisdiction;
-				stateConfig.betAmountOptions = (authenticateData.config?.betLevels || []).map(
-					(level) => level / API_AMOUNT_MULTIPLIER,
-				);
-				stateConfig.betMenuOptions = stateConfig.betAmountOptions.filter((_, index) =>
-					MOST_USED_BET_INDEXES.includes(index),
-				);
+				if (authenticateData?.config?.jurisdiction) {
+					stateConfig.jurisdiction = { ...stateConfig.jurisdiction, ...authenticateData.config.jurisdiction };
+				}
+
+				const rawLevels =
+					authenticateData.config?.betLevels && authenticateData.config.betLevels.length > 0
+						? authenticateData.config.betLevels
+						: buildBetLevelsFromMinMaxStep(
+								authenticateData.config?.minBet,
+								authenticateData.config?.maxBet,
+								authenticateData.config?.stepBet,
+							);
+
+				if (rawLevels.length > 0) {
+					stateConfig.betAmountOptions = rawLevels.map((level) => level / API_AMOUNT_MULTIPLIER);
+					stateConfig.betMenuOptions = stateConfig.betAmountOptions.filter((_, index) =>
+						MOST_USED_BET_INDEXES.includes(index),
+					);
+				}
 			}
 
 			// round

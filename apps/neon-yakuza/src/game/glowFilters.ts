@@ -10,12 +10,12 @@ export const NEON_STATIC_GLOW = new GlowFilter({
 	alpha: 0.9,
 });
 
-/** Glow discret pour symboles gagnants */
+/** Glow pour symboles gagnants (classique) */
 export const NEON_WIN_GLOW = new GlowFilter({
 	color: 0xee82ee,
-	distance: 6,
-	outerStrength: 2,
-	innerStrength: 0.2,
-	quality: 0.3,
+	distance: 10,
+	outerStrength: 4,
+	innerStrength: 0.5,
+	quality: 0.4,
 	alpha: 1,
 });

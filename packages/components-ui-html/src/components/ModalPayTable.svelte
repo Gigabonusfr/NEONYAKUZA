@@ -9,7 +9,8 @@
 	import BaseScrollable from './BaseScrollable.svelte';
 
 	type Props = {
-		children: Snippet;
+		version: Snippet;
+		content?: Snippet;
 	};
 
 	const props: Props = $props();
@@ -19,8 +20,12 @@
 	<Popup zIndex={zIndex.modal} onclose={() => (stateModal.modal = null)}>
 		<BaseContent maxWidth="100%">
 			<BaseScrollable type="column">
-				<span>ADD YOUR PAY TABLE</span>
-				{@render props.children()}
+				{#if props.content}
+					{@render props.content()}
+				{:else}
+					<span>ADD YOUR PAY TABLE</span>
+				{/if}
+				{@render props.version()}
 			</BaseScrollable>
 		</BaseContent>
 	</Popup>

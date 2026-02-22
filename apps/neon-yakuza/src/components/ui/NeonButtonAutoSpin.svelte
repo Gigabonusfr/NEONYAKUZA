@@ -44,11 +44,11 @@
 		draw={(g) => {
 			g.clear();
 			g.roundRect(-pad, -pad, size, size, radius);
-			g.fill({ fill: NEON_BG, alpha: 0.95 });
+			g.fill({ color: NEON_BG, alpha: 0.95 });
 			g.roundRect(-pad, -pad, size, size, radius);
 			g.stroke({ width: 3, color: NEON_CYAN });
 			g.rect(-hitSize / 2, -hitSize / 2, hitSize, hitSize);
-			g.fill({ fill: 0x000000, alpha: 0 });
+			g.fill({ color: 0x000000, alpha: 0 });
 		}}
 	/>
 	<Text

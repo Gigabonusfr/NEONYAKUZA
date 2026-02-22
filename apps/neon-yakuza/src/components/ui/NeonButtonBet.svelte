@@ -31,11 +31,11 @@
 				draw={(g) => {
 					g.clear();
 					g.roundRect(-BTN_PAD, -BTN_PAD, BTN_SIZE, BTN_SIZE, BTN_RADIUS);
-					g.fill({ fill: NEON_BG, alpha: 1 });
+					g.fill({ color: NEON_BG, alpha: 1 });
 					g.roundRect(-BTN_PAD, -BTN_PAD, BTN_SIZE, BTN_SIZE, BTN_RADIUS);
 					g.stroke({ width: 3, color: NEON_ROSE });
 					g.rect(-50, -50, 100, 100);
-					g.fill({ fill: 0x000000, alpha: 0 });
+					g.fill({ color: 0x000000, alpha: 0 });
 				}}
 			/>
 			<Text

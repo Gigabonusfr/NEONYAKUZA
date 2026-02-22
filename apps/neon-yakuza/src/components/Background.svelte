@@ -3,6 +3,7 @@
 	import * as PIXI from 'pixi.js';
 	import { Rectangle, Sprite, BaseSprite } from 'pixi-svelte';
 
+	import { resolveAssetPath } from '../game/assetBaseUrl';
 	import { getContext } from '../game/context';
 
 	const context = getContext();
@@ -13,7 +14,7 @@
 	let videoHeight = $state(0);
 	let videoEl: HTMLVideoElement | null = null;
 
-	const VIDEO_SRC = '/assets/backgrounds/background.mp4';
+	const VIDEO_SRC = resolveAssetPath('/assets/backgrounds/background.mp4');
 
 	/** Scale pour remplir tout le canvas (étiré / cover), pas de bandes noires */
 	const videoScale = $derived(
@@ -23,8 +24,8 @@
 	);
 	const videoX = $derived(canvasSizes.width * 0.5);
 	const videoY = $derived(canvasSizes.height * 0.5);
-	/** Vitesse de lecture : 0.2 = x0,2 (lent), 0.1 = x0,1 (très lent) */
-	const VIDEO_PLAYBACK_RATE = 0.2;
+	/** Vitesse de lecture : 0.5 = x0,5 (test), 1 = normale */
+	const VIDEO_PLAYBACK_RATE = 0.5;
 
 	onMount(() => {
 		videoEl = document.createElement('video');

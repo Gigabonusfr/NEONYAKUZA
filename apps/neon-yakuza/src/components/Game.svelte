@@ -33,6 +33,8 @@
 	import FreeSpinOutro from './FreeSpinOutro.svelte';
 	import Transition from './Transition.svelte';
 	import EnableNeonBackground from './EnableNeonBackground.svelte';
+	import GameRulesContent from './GameRulesContent.svelte';
+	import PayTableContent from './PayTableContent.svelte';
 	const context = getContext();
 
 	onMount(() => (context.stateLayout.showLoadingScreen = true));
@@ -103,5 +105,11 @@
 <Modals>
 	{#snippet version()}
 		<GameVersion version="0.0.0" />
+	{/snippet}
+	{#snippet gameRulesContent()}
+		<GameRulesContent />
+	{/snippet}
+	{#snippet payTableContent()}
+		<PayTableContent />
 	{/snippet}
 </Modals>

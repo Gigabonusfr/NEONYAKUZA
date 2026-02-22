@@ -10,7 +10,8 @@ Les assets du template ont été retirés et remplacés par les nôtres.
 | Asset | Chemin | Notes |
 |-------|--------|-------|
 | **Logo loading** | `static/assets/loader/yakuza_logo.png` | Logo écran de chargement |
-| **Background** | `static/assets/backgrounds/background.jpg` | Fond fixe |
+| **Background** | `static/assets/backgrounds/background.jpg` | Fond fixe (fallback si pas de vidéo) |
+| **Background vidéo** | `static/assets/backgrounds/background.mp4` | Fond animé (loop, muted) — utilisé en priorité si présent |
 | **Provider logo** | `static/assets/sprites/uiSlotsAssetsBespoke/provider-logo.png` | Logo du provider |
 | **Symboles** | `static/assets/sprites/symbolsStatic/` | |
 | ├ koi.png | | Poisson KOI (H1) |

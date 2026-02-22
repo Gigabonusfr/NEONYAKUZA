@@ -3,7 +3,7 @@
 	import { page } from '$app/stores';
 	import { GlobalStyle } from 'components-ui-html';
 	import { Authenticate, LoaderStakeEngine, LoaderBase, LoadI18n } from 'components-shared';
-	import { stateDemo, stateBet } from 'state-shared';
+	import { stateDemo, stateBet, stateConfig, stateUrlDerived } from 'state-shared';
 	import Game from '../components/Game.svelte';
 	import { setContext } from '../game/context';
 	import { getDemoRequestBet } from '../game/demoBet';
@@ -19,6 +19,11 @@
 	let showYourLoader = $state(false);
 	$effect(() => {
 		if (isDemoMode) showYourLoader = true;
+	});
+
+	// Jurisdiction stake.us : paramètre social=true → socialCasino pour libellés sweeps (bet→play, etc.)
+	$effect(() => {
+		stateConfig.jurisdiction.socialCasino = stateUrlDerived.social();
 	});
 
 	// Activer le mock requestBet et solde initial dès l’entrée en démo (avant que Game ne charge l’actor)

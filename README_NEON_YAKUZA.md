@@ -56,10 +56,43 @@ Les assets actuels réutilisent le cluster sample. Pour la mise en production :
 2. Héberger sur CDN
 3. Mettre à jour `apps/neon-yakuza/src/game/assets.ts` et `constants.ts`
 
-## Guidelines Stake Engine
+### Configuration CDN (publication Stake)
 
-- Pas de console.log en production (ESLint no-console)
-- Assets CDN uniquement
-- Multidevise : `numberToCurrencyString`
-- i18n : Lingui pour multilingue
-- Autoplay avec confirmation obligatoire
+En production, tous les assets (images, polices, vidéo, audio) doivent être chargés depuis le CDN Stake Engine. Le projet utilise une base URL configurable :
+
+- **Variable d’environnement** : `PUBLIC_ASSETS_BASE_URL`
+  - En dev / démo : laisser vide (assets servis par l’app).
+  - En prod (build pour Stake) : définir l’URL du CDN (ex. `https://cdn.stake-engine.com/game-id`) sans slash final.
+
+- **Fichiers concernés** :
+  - `apps/neon-yakuza/src/game/assets.ts` — sprites, spines, sons (via `resolveAssetUrl`)
+  - `apps/neon-yakuza/src/game/assetBaseUrl.ts` — helper `resolveAssetUrl` / `resolveAssetPath`
+  - `apps/neon-yakuza/src/components/Background.svelte` — vidéo de fond
+  - `apps/neon-yakuza/src/game/musicUrls.ts` — BGM
+
+Lorsque `PUBLIC_ASSETS_BASE_URL` est défini, toutes les URLs d’assets sont préfixées par cette base (pathname conservé). Build statique sans accès à des sources externes (XSS).
+
+## Guidelines Stake Engine (livraison Stake)
+
+**Le projet est livré pour Stake ; ces règles sont obligatoires.**
+
+| Règle | Détail |
+|-------|--------|
+| **Pas de console en prod** | Aucun `console.log` / `console.warn` dans le code de l’app (ESLint no-console). |
+| **Assets CDN uniquement** | En production, tous les assets (sprites, spines, fonts, vidéos) doivent être servis via CDN. |
+| **Multidevise** | Toujours afficher les montants avec `numberToCurrencyString` ; devise issue de l’auth. |
+| **i18n** | Lingui pour tout texte utilisateur (multilingue). |
+| **Autoplay** | Confirmation explicite obligatoire avant d’activer l’autoplay. |
+
+**Documentation Stake :**
+
+- **Doc locale (complète)** : dossier `stake_docs` (à la racine du studio). Index des fichiers dans **`STAKE_DOCS.md`** à la racine de ce repo.
+- [Documentation en ligne](https://stake-engine.com/docs)
+- [Stake Engine](https://engine.stake.com/)
+
+Règle Cursor (équipe + IA) : `.cursor/rules/stake-guidelines.mdc`.
+
+### Démo et production
+
+- **Démo** : le paramètre `?demo=1` active le mode test (mock RGS, solde initial, pas d’auth). Seul le layout neon-yakuza et `createPrimaryMachines` utilisent `stateDemo` ; le mock et `stateDemo.isDemo` ne sont activés que lorsque l’URL contient `demo=1`.
+- **Production** : sans `?demo=1`, l’auth et le RGS réels sont utilisés (sessionID, rgs_url en query). La page d’accueil (boutons « Démo PC » / « Démo Mobile ») est destinée aux tests internes ; l’URL de jeu Stake (CDN avec sessionID, etc.) ne sert pas cette page et envoie directement le joueur au jeu.
