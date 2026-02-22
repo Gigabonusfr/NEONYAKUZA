@@ -1,6 +1,6 @@
 {
-  "installCommand": "pnpm install",
   "buildCommand": "pnpm -w run build:neon-yakuza",
-  "outputDirectory": "apps/neon-yakuza/build",
+  "outputDirectory": "build",
+  "installCommand": "pnpm install",
   "framework": null
 }

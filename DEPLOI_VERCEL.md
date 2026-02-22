@@ -39,11 +39,12 @@ git push -u origin main
 1. Va sur [vercel.com](https://vercel.com) et connecte-toi (avec GitHub si tu veux)
 2. **Add New** → **Project**
 3. **Import** le repo GitHub que tu viens de créer
-4. Vercel détecte le `vercel.json` à la racine :
-   - **Build Command** : `pnpm --filter neon-yakuza build`
-   - **Output Directory** : `apps/neon-yakuza/build`
+4. **Important (monorepo)** : dans **Settings → General**, définis **Root Directory** sur `apps/neon-yakuza` (bouton Edit à côté, puis choisis le dossier). Sans ça, le déploiement peut rester bloqué après le build.
+5. Le `vercel.json` à la racine fournit :
+   - **Build Command** : `pnpm -w run build:neon-yakuza`
+   - **Output Directory** : `build` (relatif au Root Directory)
    - **Install Command** : `pnpm install`
-5. Clique sur **Deploy**
+6. Clique sur **Deploy**
 
 Quand le déploiement est terminé, tu auras une URL du type `https://ton-projet.vercel.app`. Tu pourras la partager pour que des gens testent la slot.
 
