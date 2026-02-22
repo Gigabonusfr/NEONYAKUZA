@@ -37,7 +37,7 @@
 		onresize={(value) => (clockSizes = value)}
 		style={{
 			fontFamily: 'Helvetica, Helvetica Neue, Arial, sans-serif',
-			fontSize: REM * 1.2,
+			fontSize: REM * 1.8,
 			fontWeight: '700',
 			fill: 0x00f5ff,
 		}}
@@ -45,10 +45,10 @@
 	/>
 	<Text
 		text="Neon Yakuza"
-		x={clockSizes.width + 10}
+		x={clockSizes.width + 12}
 		style={{
 			fontFamily: 'Helvetica, Helvetica Neue, Arial, sans-serif',
-			fontSize: REM * 1.5,
+			fontSize: REM * 2.4,
 			fontWeight: '900',
 			fill: 0x00f5ff,
 		}}

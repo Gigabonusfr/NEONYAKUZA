@@ -87,7 +87,7 @@
 				<NeonGameName />
 			{/snippet}
 			{#snippet logo()}
-				<SpriteFit key="providerLogo" anchor={{ x: 1, y: 0 }} maxHeight={70} />
+				<SpriteFit key="providerLogo" anchor={{ x: 1, y: 0 }} maxHeight={110} />
 			{/snippet}
 		</NeonUI>
 		<Win />

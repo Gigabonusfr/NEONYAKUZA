@@ -1,12 +1,28 @@
 import { fromPromise } from 'xstate';
 
 import { API_AMOUNT_MULTIPLIER } from 'constants-shared/bet';
-import { stateBet, stateUrlDerived, stateModal } from 'state-shared';
+import { stateBet, stateUrlDerived, stateModal, stateDemo } from 'state-shared';
 import { requestBet, requestEndRound } from 'rgs-requests';
 
 import type { BaseBet } from './types';
 
 const handleRequestBet = async ({ onError }: { onError: () => void }) => {
+	if (stateDemo.isDemo && stateDemo.mockRequestBet) {
+		try {
+			const data = await stateDemo.mockRequestBet();
+			if (data?.round?.state && data?.round?.state?.length > 0) {
+				stateBet.wageredBetAmount = stateBet.betAmount;
+				return data;
+			}
+			throw { error: 'Demo mock returned empty state' };
+		} catch (error) {
+			onError();
+			stateBet.autoSpinsCounter = 0;
+			stateModal.modal = { name: 'error', error };
+			console.error(error);
+			throw error;
+		}
+	}
 	try {
 		const data = await requestBet({
 			rgsUrl: stateUrlDerived.rgsUrl(),
@@ -40,6 +56,9 @@ const handleRequestBet = async ({ onError }: { onError: () => void }) => {
 };
 
 const handleRequestEndRound = async () => {
+	if (stateDemo.isDemo) {
+		return { balance: { amount: stateBet.balanceAmount * API_AMOUNT_MULTIPLIER } };
+	}
 	if(stateUrlDerived.replay()) return;
 
 	try {

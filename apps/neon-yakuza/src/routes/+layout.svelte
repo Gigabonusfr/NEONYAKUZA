@@ -3,8 +3,10 @@
 	import { page } from '$app/stores';
 	import { GlobalStyle } from 'components-ui-html';
 	import { Authenticate, LoaderStakeEngine, LoaderBase, LoadI18n } from 'components-shared';
+	import { stateDemo, stateBet } from 'state-shared';
 	import Game from '../components/Game.svelte';
 	import { setContext } from '../game/context';
+	import { getDemoRequestBet } from '../game/demoBet';
 
 	import messagesMap from '../i18n/messagesMap';
 
@@ -16,6 +18,15 @@
 	const isDemoMode = $derived($page.url.searchParams.get('demo') === '1');
 	let showYourLoader = $state(isDemoMode);
 
+	// Activer le mock requestBet et solde initial dès l’entrée en démo (avant que Game ne charge l’actor)
+	if (typeof window !== 'undefined' && window.location.search.includes('demo=1')) {
+		stateDemo.isDemo = true;
+		stateDemo.mockRequestBet = getDemoRequestBet;
+		if (stateBet.balanceAmount === 0) {
+			stateBet.balanceAmount = 100;
+		}
+	}
+
 	const loaderUrlStakeEngine = new URL('../../stake-engine-loader.gif', import.meta.url).href;
 	const loaderUrl = new URL('../../loader.gif', import.meta.url).href;
 
@@ -25,7 +36,9 @@
 <GlobalStyle>
 	<Authenticate skipAuth={isDemoMode}>
 		<LoadI18n {messagesMap}>
-			<Game />
+			{#if isDemoMode}
+				<Game />
+			{/if}
 		</LoadI18n>
 	</Authenticate>
 </GlobalStyle>
@@ -61,5 +74,7 @@
 {/if}
 
 <div class="game-root">
-	{@render props.children()}
+	{#if !isDemoMode}
+		{@render props.children()}
+	{/if}
 </div>

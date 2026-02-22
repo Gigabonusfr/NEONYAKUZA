@@ -52,18 +52,21 @@ export const convertTorResumableBet = (betToResume: Bet) => {
 export const getSymbolX = (reelIndex: number) => SYMBOL_SIZE * (reelIndex + REEL_PADDING);
 export const getSymbolY = (symbolIndexOfBoard: number) => (symbolIndexOfBoard + 0.5) * SYMBOL_SIZE;
 
-export const getSymbolKey = ({ rawSymbol }: { rawSymbol: RawSymbol }) => {
-	if (rawSymbol.multiplier !== undefined) {
-		return `${rawSymbol.name}_${rawSymbol.multiplier}` as keyof typeof SYMBOL_INFO_MAP;
+const FALLBACK_RAW_SYMBOL: RawSymbol = { name: 'SEVEN' };
+
+export const getSymbolKey = ({ rawSymbol }: { rawSymbol: RawSymbol | undefined }) => {
+	const s = rawSymbol ?? FALLBACK_RAW_SYMBOL;
+	if (s.multiplier !== undefined) {
+		return `${s.name}_${s.multiplier}` as keyof typeof SYMBOL_INFO_MAP;
 	}
-	return rawSymbol.name as keyof typeof SYMBOL_INFO_MAP;
+	return s.name as keyof typeof SYMBOL_INFO_MAP;
 };
 
 export const getSymbolInfo = ({
 	rawSymbol,
 	state,
 }: {
-	rawSymbol: RawSymbol;
+	rawSymbol: RawSymbol | undefined;
 	state: SymbolState;
 }) => {
 	const symbolKey = getSymbolKey({ rawSymbol });
