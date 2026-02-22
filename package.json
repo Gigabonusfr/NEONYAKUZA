@@ -8,6 +8,7 @@
     "format": "turbo run format",
     "dev": "turbo run dev",
     "build": "turbo run build",
+    "build:neon-yakuza": "pnpm --filter pixi-svelte run build && pnpm --filter neon-yakuza run build",
     "preview": "turbo run preview",
     "real-build-storybook": "turbo run real-build-storybook",
     "storybook": "turbo run storybook",

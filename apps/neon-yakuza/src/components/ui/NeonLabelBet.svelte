@@ -33,18 +33,18 @@
 
 	const w = 140;
 	const h = 52;
-	const labelStyle = {
+	const labelStyle = $derived({
 		fontFamily: 'proxima-nova, sans-serif',
 		fontSize: 16,
 		fontWeight: '600',
 		fill: disabled ? 0x666666 : NEON_ROSE,
-	};
-	const valueStyle = {
+	});
+	const valueStyle = $derived({
 		fontFamily: 'proxima-nova, sans-serif',
 		fontSize: 22,
 		fontWeight: '700',
 		fill: disabled ? 0x666666 : NEON_ROSE,
-	};
+	});
 </script>
 
 <Container

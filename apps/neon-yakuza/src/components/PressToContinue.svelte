@@ -18,7 +18,7 @@
 	const glowFilter = new GlowFilter({
 		color: NEON_CYAN,
 		distance: 12,
-		outerStrength: 2.5 + Math.sin(pulse) * 1,
+		outerStrength: 2.5,
 		innerStrength: 0.3,
 	});
 

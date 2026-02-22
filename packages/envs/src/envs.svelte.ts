@@ -1,8 +1,8 @@
-import * as envStaticPublic from '$env/static/public';
+import { env } from '$env/dynamic/public';
 
-export let PUBLIC_SITE_MODE = envStaticPublic.PUBLIC_SITE_MODE;
-export let PUBLIC_SENTRY_DSN = envStaticPublic.PUBLIC_SENTRY_DSN;
-export let PUBLIC_CHROMATIC = envStaticPublic.PUBLIC_CHROMATIC === 'true';
+export let PUBLIC_SITE_MODE = env.PUBLIC_SITE_MODE ?? '';
+export let PUBLIC_SENTRY_DSN = env.PUBLIC_SENTRY_DSN ?? '';
+export let PUBLIC_CHROMATIC = (env.PUBLIC_CHROMATIC ?? '') === 'true';
 
 // ==============================================================================================================================
 // $env/dynamic/private
