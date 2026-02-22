@@ -1,6 +1,6 @@
 {
   "installCommand": "pnpm install",
-  "buildCommand": "pnpm --filter neon-yakuza build",
+  "buildCommand": "pnpm exec turbo run build --filter=neon-yakuza...",
   "outputDirectory": "apps/neon-yakuza/build",
   "framework": null
 }

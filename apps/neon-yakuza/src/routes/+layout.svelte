@@ -16,7 +16,10 @@
 
 	// ?demo=1 : mode test jouable sans Storybook — saute les loaders externes, va direct au jeu
 	const isDemoMode = $derived($page.url.searchParams.get('demo') === '1');
-	let showYourLoader = $state(isDemoMode);
+	let showYourLoader = $state(false);
+	$effect(() => {
+		if (isDemoMode) showYourLoader = true;
+	});
 
 	// Activer le mock requestBet et solde initial dès l’entrée en démo (avant que Game ne charge l’actor)
 	if (typeof window !== 'undefined' && window.location.search.includes('demo=1')) {

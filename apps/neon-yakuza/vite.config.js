@@ -9,4 +9,8 @@ export default {
 		host: true,
 		port: 3001,
 	},
+	ssr: {
+		noExternal: ['pixi-svelte'],
+		...base.ssr,
+	},
 };
